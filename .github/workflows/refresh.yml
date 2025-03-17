@@ -29,8 +29,6 @@ jobs:
     needs: fetch
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: gh-pages
 
       - uses: actions/download-artifact@v4
         with:
@@ -39,7 +37,7 @@ jobs:
       - name: Push changes if any
         run: |
           if [[ $(git status -s krasnodar_stadium.ics) ]]; then
-            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
 
             git add krasnodar_stadium.ics && \
