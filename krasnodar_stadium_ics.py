@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, Alarm
 from lxml import html
 import requests
 
@@ -70,6 +70,13 @@ def create_calendar_event(year, month, day, time, team_home, team_guest):
         f"{year}{month}{day}{hour}{minute}".encode("ascii")
     ).hexdigest()
     event.add("uid", uid)
+
+    # Add alarm that triggers 1 day before the event
+    alarm = Alarm()
+    alarm.add("action", "DISPLAY")
+    alarm.add("description", f"Матч {team_home} - {team_guest}")
+    alarm.add("trigger", timedelta(days=-1))
+    event.add_component(alarm)
 
     return event
 
