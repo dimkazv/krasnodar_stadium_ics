@@ -37,7 +37,7 @@ def get_matches_grouped_by_months():
         year = int(month_and_year[1])
 
         matches_in_month = m.xpath(
-            ".//strong[text()[contains(., '«Краснодар» ')]]/../.."
+            ".//strong[text()[contains(., '«Краснодар»')] or text()[contains(., '«OZON АРЕНА»')]]/../.."
         )
         for match in matches_in_month:
             day = int(match.xpath("span[@class='date']/text()")[0])
