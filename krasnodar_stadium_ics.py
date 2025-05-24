@@ -37,14 +37,14 @@ def get_matches_grouped_by_months():
         year = int(month_and_year[1])
 
         matches_in_month = m.xpath(
-            ".//strong[text()[contains(., '«Краснодар»')] or text()[contains(., '«OZON АРЕНА»')]]/../.."
+            ".//strong[text()[contains(., '«Краснодар»')] or text()[contains(., '«Ozon Арена»')]]/../.."
         )
         for match in matches_in_month:
             day = int(match.xpath("span[@class='date']/text()")[0])
             time = match.xpath("span[@class='day-of-week']")[0].xpath("time/text()")[0]
             team_home = match.xpath(".//span[contains(@class, 'team home')]/strong/text()")[0]
             team_guest = match.xpath(".//span[contains(@class, 'team guest')]/strong/text()")[0]
-            print(day, time, team_home, team_guest)
+            print(day, month, year, time, team_home, team_guest)
             e = create_calendar_event(year, month, day, time, team_home, team_guest)
             events.append(e)
 
