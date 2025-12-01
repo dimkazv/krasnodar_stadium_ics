@@ -32,7 +32,22 @@ def get_matches_grouped_by_months():
     events = []
 
     for m in months:
-        month_and_year = m.xpath("dt/text()")[0].split('\xa0')
+        # Some <dt> nodes may contain an empty string – skip them safely
+        month_and_year_nodes = m.xpath("dt/text()")
+        if not month_and_year_nodes:
+            logging.warning("Skipping month block without dt text")
+            continue
+
+        raw_month_and_year = month_and_year_nodes[0].strip()
+        if not raw_month_and_year:
+            logging.warning("Skipping month block with empty dt text")
+            continue
+
+        month_and_year = raw_month_and_year.split("\xa0")
+        if len(month_and_year) < 2 or not month_and_year[0].strip():
+            logging.warning("Skipping month block with unexpected dt format: %r", raw_month_and_year)
+            continue
+
         month = kirillic_month_to_number(month_and_year[0])
         year = int(month_and_year[1])
 
